@@ -16,6 +16,7 @@ public class CandyTest {
 		assertEquals(BigDecimal.valueOf(3.5), candyTest.getPrice());
 		assertEquals("Candy", candyTest.getType());
 		assertEquals(5, candyTest.getStock());
+		assertEquals("Munch Munch, Yum!", candyTest.getMessage());
 	}
 
 	@Test
