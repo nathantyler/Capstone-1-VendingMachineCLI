@@ -16,6 +16,41 @@ public class VendingMachine {
 	private List<Gum> gums;
 
 	/**
+	 * @return the items
+	 */
+	public List<Item> getItems() {
+		return items;
+	}
+
+	/**
+	 * @return the chips
+	 */
+	public List<Chips> getChips() {
+		return chips;
+	}
+
+	/**
+	 * @return the candies
+	 */
+	public List<Candy> getCandies() {
+		return candies;
+	}
+
+	/**
+	 * @return the drinks
+	 */
+	public List<Drink> getDrinks() {
+		return drinks;
+	}
+
+	/**
+	 * @return the gums
+	 */
+	public List<Gum> getGums() {
+		return gums;
+	}
+
+	/**
 	 * 
 	 */
 	public VendingMachine() {
