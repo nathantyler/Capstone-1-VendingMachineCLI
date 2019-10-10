@@ -16,6 +16,41 @@ public class VendingMachine {
 	private List<Gum> gums;
 
 	/**
+	 * @return the items
+	 */
+	public List<Item> getItems() {
+		return items;
+	}
+
+	/**
+	 * @return the chips
+	 */
+	public List<Chips> getChips() {
+		return chips;
+	}
+
+	/**
+	 * @return the candies
+	 */
+	public List<Candy> getCandies() {
+		return candies;
+	}
+
+	/**
+	 * @return the drinks
+	 */
+	public List<Drink> getDrinks() {
+		return drinks;
+	}
+
+	/**
+	 * @return the gums
+	 */
+	public List<Gum> getGums() {
+		return gums;
+	}
+
+	/**
 	 * 
 	 */
 	public VendingMachine() {
@@ -23,6 +58,12 @@ public class VendingMachine {
 		chips = new ArrayList<Chips>();
 		candies = new ArrayList<Candy>();
 		gums = new ArrayList<Gum>();
+		try {
+			populateItems();
+		} catch (Exception e) {
+			System.out.println("Problem! vendingmachine.csv most likely not present.");
+		}
+
 	}
 
 	private void populateItems() throws IOException {
@@ -49,8 +90,7 @@ public class VendingMachine {
 					Gum gum = new Gum(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					gums.add(gum);
 				}
-					
-				
+
 			}
 		} catch (Exception e) {
 			System.out.println("Problem encountered. The file vendingmachine.csv is probably missing. Exiting.");
