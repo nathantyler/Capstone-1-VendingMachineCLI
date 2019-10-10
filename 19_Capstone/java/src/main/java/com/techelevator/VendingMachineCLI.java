@@ -38,7 +38,8 @@ public class VendingMachineCLI {
 	public static void purchaseMenuRun(Menu menu) {
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-			
+			System.out.println();
+			System.out.println("Current Money Provided: $");
 			if (choice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
 				// feed money
 			} else if (choice.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
