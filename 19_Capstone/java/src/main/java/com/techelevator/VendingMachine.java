@@ -57,6 +57,7 @@ public class VendingMachine {
 		items = new ArrayList<Item>();
 		chips = new ArrayList<Chips>();
 		candies = new ArrayList<Candy>();
+		drinks = new ArrayList<Drink>();
 		gums = new ArrayList<Gum>();
 		try {
 			populateItems();
@@ -71,24 +72,28 @@ public class VendingMachine {
 		try (Scanner reader = new Scanner(file.getAbsoluteFile())) {
 			while (reader.hasNextLine()) {
 				String line = reader.nextLine();
-				String[] itemsStrings = line.split("|");
-				Item item = new Item(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-				items.add(item);
+				String[] itemsStrings = line.split("\\|");
+				//Item item = new Item(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
+				//items.add(item);
 				if (itemsStrings[3].equals("Chip")) {
 					Chips chip = new Chips(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					chips.add(chip);
+					items.add(chip);
 				}
 				if (itemsStrings[3].equals("Candy")) {
 					Candy candy = new Candy(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					candies.add(candy);
+					items.add(candy);
 				}
 				if (itemsStrings[3].equals("Drink")) {
 					Drink drink = new Drink(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					drinks.add(drink);
+					items.add(drink);
 				}
 				if (itemsStrings[3].equals("Gum")) {
 					Gum gum = new Gum(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					gums.add(gum);
+					items.add(gum);
 				}
 
 			}

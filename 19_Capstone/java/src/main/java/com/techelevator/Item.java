@@ -2,10 +2,10 @@ package com.techelevator;
 
 import java.math.BigDecimal;
 
-public class Item {
+public abstract class Item {
 
 	protected String name, position;
-	protected static String type, message;
+	protected String type, message;
 	protected int stock;
 	protected BigDecimal price;
 
