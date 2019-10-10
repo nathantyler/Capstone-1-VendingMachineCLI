@@ -66,6 +66,13 @@ public class Item {
 	}
 
 	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {

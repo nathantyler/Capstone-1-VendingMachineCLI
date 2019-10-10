@@ -33,7 +33,22 @@ public class VendingMachine {
 				String[] itemsStrings = line.split("|");
 				Item item = new Item(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 				items.add(item);
-				//if (itemsStrings[3].equals("Chip")) 
+				if (itemsStrings[3].equals("Chip")) {
+					Chips chip = new Chips(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
+					chips.add(chip);
+				}
+				if (itemsStrings[3].equals("Candy")) {
+					Candy candy = new Candy(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
+					candies.add(candy);
+				}
+				if (itemsStrings[3].equals("Drink")) {
+					Drink drink = new Drink(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
+					drinks.add(drink);
+				}
+				if (itemsStrings[3].equals("Gum")) {
+					Gum gum = new Gum(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
+					gums.add(gum);
+				}
 					
 				
 			}
