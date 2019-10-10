@@ -2,6 +2,7 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,7 +31,11 @@ public class VendingMachine {
 			while (reader.hasNextLine()) {
 				String line = reader.nextLine();
 				String[] itemsStrings = line.split("|");
-				Item item;
+				Item item = new Item(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
+				items.add(item);
+				//if (itemsStrings[3].equals("Chip")) 
+					
+				
 			}
 		} catch (Exception e) {
 			System.out.println("Problem encountered. The file vendingmachine.csv is probably missing. Exiting.");

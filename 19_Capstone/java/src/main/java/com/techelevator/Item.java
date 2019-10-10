@@ -13,11 +13,12 @@ public class Item {
 	 * @param name
 	 * @param price
 	 */
-	public Item(String name, BigDecimal price) {
-		type = "Item";
+	public Item(String position, String name, BigDecimal price) {
+		//type = "Item";
 		stock = 5;
 		this.name = name;
 		this.price = price;
+		this.position = position;
 	}
 	
 	/**
@@ -25,7 +26,7 @@ public class Item {
 	 */
 	public Item() {
 		stock = 5;
-		type = "Item";
+		//type = "Item";
 		
 	}
 
