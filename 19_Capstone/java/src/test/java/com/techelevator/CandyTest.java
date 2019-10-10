@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 public class CandyTest {
-	Item candyTest = new Candy("A2", "Sour Patch", BigDecimal.valueOf(3.5));
+	Candy candyTest = new Candy("A2", "Sour Patch", BigDecimal.valueOf(3.5));
 	
 	@Test
 	public void gettersShouldReturnRelevantValues() {

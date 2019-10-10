@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 public class ChipsTest {
-	Item chipsTest = new Chips("C3", "Lay's", BigDecimal.valueOf(2));
+	Chips chipsTest = new Chips("C3", "Lay's", BigDecimal.valueOf(2));
 	
 	@Test
 	public void gettersShouldReturnRelevantValues() {
