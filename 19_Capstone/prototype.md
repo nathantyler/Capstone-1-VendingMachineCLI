@@ -1,6 +1,6 @@
 Project Progress Trello Board: https://trello.com/b/op2jHF4y/vending-machine
 
-- 1. User Stories (MVP): 
+- *User Stories (MVP):* 
     - Vendor: 
       - As a vendor, I want to be able to build or update the inventory for the machine so that customers can get the items they want in most cases.
       - As a vendor, I want to be able to print audit file so that I can track the revenue and popular items.
@@ -8,7 +8,7 @@ Project Progress Trello Board: https://trello.com/b/op2jHF4y/vending-machine
       - As a customer, I want to be able to purchase a certain item in the vending machine with certain cash values.
       - As a customer, I want to be able to get change or my money back if there is insufficient or unmatched funds.
 
-- 2. Vending Machine Functions:
+- *Vending Machine Functions:*
     - Vending Machine should be able to store a inventory of items (reading the log file).
     - Vending Machine should only store a certain quantity of items.
     - Vending Machine should assign each item a unique location.
