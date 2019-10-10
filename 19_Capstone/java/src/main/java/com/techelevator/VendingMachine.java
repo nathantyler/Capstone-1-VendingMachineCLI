@@ -23,6 +23,12 @@ public class VendingMachine {
 		chips = new ArrayList<Chips>();
 		candies = new ArrayList<Candy>();
 		gums = new ArrayList<Gum>();
+		try {
+			populateItems();
+		} catch (Exception e) {
+			System.out.println("Problem! vendingmachine.csv most likely not present.");
+		}
+
 	}
 
 	private void populateItems() throws IOException {
@@ -49,8 +55,7 @@ public class VendingMachine {
 					Gum gum = new Gum(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					gums.add(gum);
 				}
-					
-				
+
 			}
 		} catch (Exception e) {
 			System.out.println("Problem encountered. The file vendingmachine.csv is probably missing. Exiting.");
