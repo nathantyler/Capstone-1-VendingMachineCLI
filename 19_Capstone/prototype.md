@@ -25,4 +25,5 @@ Project Progress Trello Board: https://trello.com/b/op2jHF4y/vending-machine
     - Vending Machine should be able to handle all kinds of exceptions:
         - SoldOut Exception
         - StorageFull Exception
-        - CashValue Exception
+        - ChangeValue Exception
+        - InsufficientPayment Exception
