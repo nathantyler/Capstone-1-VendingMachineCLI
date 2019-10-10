@@ -2,11 +2,11 @@ Project Progress Trello Board: https://trello.com/b/op2jHF4y/vending-machine
 
 - *User Stories (MVP):* 
     - Vendor: 
-      - As a vendor, I want to be able to build or update the inventory for the machine so that customers can get the items they want in most cases.
-      - As a vendor, I want to be able to print audit file so that I can track the revenue and popular items.
+        - As a vendor, I want to be able to build or update the inventory for the machine so that customers can get the items they want in most cases.
+        - As a vendor, I want to be able to print audit file so that I can track the revenue and popular items.
     - Customer:
-      - As a customer, I want to be able to purchase a certain item in the vending machine with certain cash values.
-      - As a customer, I want to be able to get change or my money back if there is insufficient or unmatched funds.
+        - As a customer, I want to be able to purchase a certain item in the vending machine with certain cash values.
+        - As a customer, I want to be able to get change or my money back if there is insufficient or unmatched funds.
 
 - *Vending Machine Functions:*
     - Vending Machine should be able to store a inventory of items (reading the log file).
@@ -23,6 +23,6 @@ Project Progress Trello Board: https://trello.com/b/op2jHF4y/vending-machine
     - Vending Machine should track the total amount of sales and revenue (writing to log file).
     - Vending Machine should be able to print the audit file (printing inventory and revenue).
     - Vending Machine should be able to handle all kinds of exceptions:
-      - SoldOut Exception
-      - StorageFull Exception
-      - CashValue Exception
+        - SoldOut Exception
+        - StorageFull Exception
+        - CashValue Exception
