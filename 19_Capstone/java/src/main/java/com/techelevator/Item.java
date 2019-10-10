@@ -2,12 +2,23 @@ package com.techelevator;
 
 import java.math.BigDecimal;
 
-public abstract class Item {
+public class Item {
 
 	protected String name, position;
 	protected static String type, message;
 	protected int stock;
 	protected BigDecimal price;
+	
+	
+	/**
+	 * @param name
+	 * @param price
+	 */
+	public Item(String name, BigDecimal price) {
+		this.name = name;
+		this.price = price;
+	}
+
 	/**
 	 * @return the name
 	 */
