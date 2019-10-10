@@ -34,7 +34,7 @@ public class Item {
 	/**
 	 * @return the type
 	 */
-	public static String getType() {
+	public String getType() {
 		return type;
 	}
 	/**

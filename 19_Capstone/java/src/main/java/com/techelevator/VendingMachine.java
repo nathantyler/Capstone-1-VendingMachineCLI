@@ -27,7 +27,11 @@ public class VendingMachine {
 	private void populateItems() throws IOException {
 		File file = new File("vendingmachine.csv");
 		try (Scanner reader = new Scanner(file.getAbsoluteFile())) {
-			
+			while (reader.hasNextLine()) {
+				String line = reader.nextLine();
+				String[] itemsStrings = line.split("|");
+				Item item = new Item();
+			}
 		} catch (Exception e) {
 			System.out.println("Problem encountered. The file vendingmachine.csv is probably missing. Exiting.");
 			System.exit(1);
