@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 public class CandyTest {
-
-	Item candyTest = new Candy("Sour Patch", BigDecimal.valueOf(3.5));
+	Item candyTest = new Candy("A2", "Sour Patch", BigDecimal.valueOf(3.5));
 	
 	@Test
 	public void gettersShouldReturnRelevantValues() {
+		assertEquals("A2", candyTest.getPosition());
 		assertEquals("Sour Patch", candyTest.getName());
 		assertEquals(BigDecimal.valueOf(3.5), candyTest.getPrice());
 		assertEquals("Candy", candyTest.getType());
@@ -29,5 +29,12 @@ public class CandyTest {
 		assertEquals(3, candyTest.getStock());
 		assertEquals(BigDecimal.valueOf(4.0), candyTest.getPrice());
 		assertEquals("A1", candyTest.getPosition());
+	}
+	
+	@Test
+	public void decrementStockShouldChangeStockValue() {
+		candyTest.decrementStock();
+		candyTest.decrementStock();
+		assertEquals(3, candyTest.getStock());
 	}
 }
