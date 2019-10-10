@@ -30,7 +30,7 @@ public class VendingMachine {
 			while (reader.hasNextLine()) {
 				String line = reader.nextLine();
 				String[] itemsStrings = line.split("|");
-				Item item = new Item();
+				Item item;
 			}
 		} catch (Exception e) {
 			System.out.println("Problem encountered. The file vendingmachine.csv is probably missing. Exiting.");

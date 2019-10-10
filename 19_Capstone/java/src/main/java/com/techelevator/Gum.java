@@ -8,6 +8,13 @@ public class Gum extends Item {
 		super(name, price);
 		type = "Gum";
 		message = "Chew Chew, Yum!";
+		stock = 5;
+	}
+	
+	public Gum() {
+		type = "Gum";
+		message = "Chew Chew, Yum!";
+		stock = 5;
 	}
 
 }

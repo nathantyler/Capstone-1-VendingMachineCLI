@@ -10,6 +10,13 @@ public class Chips extends Item {
 		super(name, price);
 		type = "Chip";
 		message = "Crunch Crunch, Yum!";
+		stock = 5;
+	}
+	
+	public Chips() {
+		stock = 5;
+		type = "Chip";
+		message = "Crunch Crunch, Yum!";
 	}
 
 }

@@ -8,6 +8,13 @@ public class Drink extends Item {
 		super(name, price);
 		type = "Drink";
 		message = "Glug Glug, Yum!";
+		stock = 5;
+	}
+	
+	public Drink() {
+		type = "Drink";
+		message = "Glug Glug, Yum!";
+		stock = 5;
 	}
 
 }
