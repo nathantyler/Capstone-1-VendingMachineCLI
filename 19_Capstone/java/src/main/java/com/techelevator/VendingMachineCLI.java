@@ -21,11 +21,11 @@ public class VendingMachineCLI {
 															PURCHASE_MENU_OPTION_SELECT_PRODUCT, 
 															PURCHASE_MENU_OPTION_FINISH_TRANSACTION };
 	
-	private static final BigDecimal FEED_MONEY_MENU_1_DOLLAR = BigDecimal.valueOf(1);
-	private static final BigDecimal FEED_MONEY_MENU_2_DOLLAR = BigDecimal.valueOf(2);
-	private static final BigDecimal FEED_MONEY_MENU_5_DOLLAR = BigDecimal.valueOf(5);
-	private static final BigDecimal FEED_MONEY_MENU_10_DOLLAR = BigDecimal.valueOf(10);
-	private static final BigDecimal FEED_MONEY_MENU_20_DOLLAR = BigDecimal.valueOf(20);
+	private static final BigDecimal FEED_MONEY_MENU_1_DOLLAR = new BigDecimal("1.00");
+	private static final BigDecimal FEED_MONEY_MENU_2_DOLLAR = new BigDecimal("2.00");
+	private static final BigDecimal FEED_MONEY_MENU_5_DOLLAR = new BigDecimal("5.00");
+	private static final BigDecimal FEED_MONEY_MENU_10_DOLLAR = new BigDecimal("10.00");
+	private static final BigDecimal FEED_MONEY_MENU_20_DOLLAR = new BigDecimal("20.00");
 	private static final BigDecimal[] FEED_MONEY_MENU_OPTIONS = { FEED_MONEY_MENU_1_DOLLAR, 
 																  FEED_MONEY_MENU_2_DOLLAR, 
 																  FEED_MONEY_MENU_5_DOLLAR,
