@@ -20,10 +20,6 @@ public class VendingMachine {
 	private static final String CHIP_TYPE = "Chip", CANDY_TYPE = "Candy", DRINK_TYPE = "Drink", GUM_TYPE = "Gum";
 	private static final String LOG_FILE_NAME = "log.txt";
 	private List<Item> items;
-	private List<Chips> chips;
-	private List<Candy> candies;
-	private List<Drink> drinks;
-	private List<Gum> gums;
 	private Map<String, Item> itemSelector;
 	private BigDecimal userBalance;
 	private List<String> salesLog;
@@ -31,10 +27,6 @@ public class VendingMachine {
 
 	public VendingMachine() {
 		items = new ArrayList<Item>();
-		chips = new ArrayList<Chips>();
-		candies = new ArrayList<Candy>();
-		drinks = new ArrayList<Drink>();
-		gums = new ArrayList<Gum>();
 		itemSelector = new HashMap<String, Item>();
 		userBalance = new BigDecimal("0.00");
 		salesLog = new ArrayList<String>();
@@ -62,22 +54,6 @@ public class VendingMachine {
 		return userBalance;
 	}
 
-	public List<Chips> getChips() {
-		return chips;
-	}
-
-	public List<Candy> getCandies() {
-		return candies;
-	}
-
-	public List<Drink> getDrinks() {
-		return drinks;
-	}
-
-	public List<Gum> getGums() {
-		return gums;
-	}
-
 	public Map<String, Item> getItemSelector() {
 		return itemSelector;
 	}
@@ -93,13 +69,6 @@ public class VendingMachine {
 	public void dockMoneyOnMachine(BigDecimal itemPrice) {
 		userBalance = userBalance.subtract(itemPrice);
 	}
-
-	/*
-	 * Hey, Guan: Here are a few utility methods that may make things easier for
-	 * you. Use them if it helps. We can remove what we don't need, but I think some
-	 * may be very useful and make the code short/cleaner/nicer or at least more
-	 * readable.
-	 */
 
 	public boolean itemAtPositionExists(String position) {
 		return itemSelector.get(position) != null;
@@ -133,8 +102,7 @@ public class VendingMachine {
 
 	/*
 	 * This will return the items price. If the item at that position doesn't exist,
-	 * it returns -1. Actually I may change this to be in line with the rest of the
-	 * item getters and make it return null if unsuccessful. What do you think?
+	 * it returns -1.
 	 */
 	public BigDecimal getItemPrice(String position) {
 		return itemSelector.get(position) != null ? itemSelector.get(position).getPrice() : BigDecimal.valueOf(-1);
@@ -154,8 +122,11 @@ public class VendingMachine {
 		int quarters = balanceNoDecimal / 25;
 		int dimes = (balanceNoDecimal - (quarters * 25)) / 10;
 		int nickels = (balanceNoDecimal - (quarters * 25 + dimes * 10)) / 5;
-
-		String quarterAmount = "", dimeAmount = "", nickelAmount = "";
+		
+		String quarterAmount = "",
+			   dimeAmount = "",
+			   nickelAmount = "";
+		
 		if (quarters == 1) {
 			quarterAmount = quarters + " quarter";
 		} else if (quarters > 1) {
@@ -169,15 +140,14 @@ public class VendingMachine {
 		}
 
 		if (nickels == 1) {
-			nickelAmount = (quarters > 0 || dimes > 0) ? " and " + nickels + " nickel" : nickels + "nickel";
-		} else if (nickels > 1) {
-			nickelAmount = (quarters > 0 || dimes > 0) ? " and " + nickels + " nickels" : nickels + "nickels";
-		}
+			nickelAmount = (quarters > 0 || dimes > 0) ? " and " + nickels + " nickel" : nickels + " nickel";
+		} 
 
 		if ((quarterAmount + dimeAmount + nickelAmount).equals("")) {
-			return "You have spent all your money or have not added money yet. Thanks for shopping!";
-		}
-
+			return "You have spent all your money or have not added money yet. "
+					+ "Thanks for shopping!";
+		} 
+		
 		userBalance = BigDecimal.valueOf(0);
 		return "Here is your change: " + quarterAmount + dimeAmount + nickelAmount + ". Have a great day!";
 	}
@@ -191,22 +161,18 @@ public class VendingMachine {
 				String[] itemsStrings = line.split("\\|");
 				if (itemsStrings[3].equals(CHIP_TYPE)) {
 					Chips chip = new Chips(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-					chips.add(chip);
 					items.add(chip);
 					itemSelector.put(chip.getPosition(), chip);
 				} else if (itemsStrings[3].equals(CANDY_TYPE)) {
 					Candy candy = new Candy(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-					candies.add(candy);
 					items.add(candy);
 					itemSelector.put(candy.getPosition(), candy);
 				} else if (itemsStrings[3].equals(DRINK_TYPE)) {
 					Drink drink = new Drink(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-					drinks.add(drink);
 					items.add(drink);
 					itemSelector.put(drink.getPosition(), drink);
 				} else if (itemsStrings[3].equals(GUM_TYPE)) {
 					Gum gum = new Gum(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-					gums.add(gum);
 					items.add(gum);
 					itemSelector.put(gum.getPosition(), gum);
 				}
