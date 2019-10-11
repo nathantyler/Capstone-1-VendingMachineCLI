@@ -75,27 +75,26 @@ public class VendingMachineCLI {
 	public static void displayVendingMachineItems(VendingMachine vendingMachine) {
 		System.out.println();
 		System.out.println("*Available Items*");
-		System.out.println("Slot Location          Product Name           "
-				+ "Price                  Type");
-		System.out.println(String.join("", Collections.nCopies(80, "=")));
+		System.out.println("Slot Location       Product Name        "
+				+ "Price               Type                Stock");
+		System.out.println(String.join("", Collections.nCopies(88, "=")));
 		for (Item item : vendingMachine.getItems()) {
-			int itemStock = item.getStock();
-			if (itemStock > 0) {
 				String itemPosition = item.getPosition();
 				String itemName = item.getName();
 				String itemPrice = "$" + item.getPrice();
 				String itemType = item.getType();
+				String itemStock = item.getStock() > 0 ? String.valueOf(item.getStock()) : "SOLD OUT";
 				
 				System.out.println(itemPosition + generateSpace(itemPosition) +
 						itemName + generateSpace(itemName) + 
 						itemPrice + generateSpace(itemPrice) +
-						itemType);
-			}
+						itemType + generateSpace(itemType) + 
+						itemStock);
 		}
 	}
 	
 	public static String generateSpace(String str) {
-		int spaceLength = 23 - str.length();
+		int spaceLength = 20 - str.length();
 		String space = "";
 		
 		for (int i = 1; i <= spaceLength; i++) {
