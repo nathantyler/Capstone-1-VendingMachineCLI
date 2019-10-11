@@ -24,10 +24,10 @@ public class ItemTest {
 		assertEquals("Glug Glug, Yum!", drinkTest.getMessage());
 		assertEquals("Munch Munch, Yum!", candyTest.getMessage());
 		
-		assertEquals("Gum", gumTest.getMessage());
-		assertEquals("Chip", chipsTest.getMessage());
-		assertEquals("Drink", drinkTest.getMessage());
-		assertEquals("Candy", candyTest.getMessage());
+		assertEquals("Gum", gumTest.getType());
+		assertEquals("Chip", chipsTest.getType());
+		assertEquals("Drink", drinkTest.getType());
+		assertEquals("Candy", candyTest.getType());
 		
 		assertEquals(5, gumTest.getStock());
 		gumTest.decrementStock();
