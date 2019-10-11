@@ -134,13 +134,17 @@ public class VendingMachineCLI {
 		
 		System.out.println();
 		System.out.println("Current Money Provided: $" + vendingMachine.getUserBalance());
-		
+		vendingMachine.log(VendingMachine.FEED_MONEY, choice);
 		System.out.println();
 		System.out.println("Would you like to add more money?");
+		
 		String feedMore = (String) menu.getChoiceFromOptions(FEED_MONEY_EXIT_MENU_OPTIONS);
+		
 		if (feedMore.equals(FEED_MONEY_CONTINUE)) {
 			feedMoney(menu, vendingMachine);
+			
 		}
+		
 	}
 	
 	public static void selectProduct(Menu menu, VendingMachine vendingMachine) {
@@ -171,6 +175,7 @@ public class VendingMachineCLI {
 				System.out.println("You just purchased " + itemName + " for $" + itemPrice + ".");
 				System.out.println("Your current balance is $" + userBalance + ".");
 				System.out.println(itemMessage);
+				vendingMachine.log(choice);
 			} else {
 				System.out.println();
 				System.out.println("Insufficient balance, please add more money.");

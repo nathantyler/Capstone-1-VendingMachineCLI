@@ -1,8 +1,12 @@
 package com.techelevator;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,13 +14,20 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class VendingMachine {
+	public static final int FEED_MONEY = 1, GIVE_CHANGE = 2;
+	private static final String FEED_MONEY_STR = " FEED MONEY ", GIVE_CHANGE_STR = " GIVE CHANGE ";
+	private static final String INVENTORY_FILE_NAME = "vendingmachine.csv";
+	private static final String CHIP_TYPE = "Chip", CANDY_TYPE = "Candy", DRINK_TYPE = "Drink", GUM_TYPE = "Gum";
+	private static final String LOG_FILE_NAME = "log.txt";
 	private List<Item> items;
 	private List<Chips> chips;
 	private List<Candy> candies;
 	private List<Drink> drinks;
 	private List<Gum> gums;
-	private Map<String, Item> itemSelector; 
-	private BigDecimal userBalance; 
+	private Map<String, Item> itemSelector;
+	private BigDecimal userBalance;
+	private List<String> salesLog;
+	private File logFile;
 
 	public VendingMachine() {
 		items = new ArrayList<Item>();
@@ -26,7 +37,16 @@ public class VendingMachine {
 		gums = new ArrayList<Gum>();
 		itemSelector = new HashMap<String, Item>();
 		userBalance = new BigDecimal("0.00");
-		
+		salesLog = new ArrayList<String>();
+		logFile = new File(LOG_FILE_NAME);
+		if (!logFile.exists()) {
+			try {
+				logFile.createNewFile();
+			} catch (Exception e) {
+
+			}
+
+		}
 		try {
 			populateItems();
 		} catch (Exception e) {
@@ -62,10 +82,14 @@ public class VendingMachine {
 		return itemSelector;
 	}
 
+	public List<String> getSalesLog() {
+		return salesLog;
+	}
+
 	public void addMoneyToMachine(BigDecimal money) {
 		userBalance = userBalance.add(money);
 	}
-	
+
 	public void dockMoneyOnMachine(BigDecimal itemPrice) {
 		userBalance = userBalance.subtract(itemPrice);
 	}
@@ -80,15 +104,15 @@ public class VendingMachine {
 	public boolean itemAtPositionExists(String position) {
 		return itemSelector.get(position) != null;
 	}
-	
+
 	/* returns -1 if there is no item at that position */
 	public int getItemStock(String position) {
 		Item itemAtPosition = itemSelector.get(position);
-		
+
 		if (itemAtPosition != null) {
 			return itemAtPosition.getStock();
 		}
-		
+
 		return -1;
 	}
 
@@ -124,72 +148,63 @@ public class VendingMachine {
 		return decrementSuccesful;
 	}
 
-	/*nickels, dimes, and quarters*/
+	/* nickels, dimes, and quarters */
 	public String getChangeFromMachine() {
-		Map<BigDecimal, String> currencyMap = new HashMap<>(); 
-		currencyMap.put(BigDecimal.valueOf(0.05), "nickel");
-		currencyMap.put(BigDecimal.valueOf(0.1), "dime");
-		currencyMap.put(BigDecimal.valueOf(0.25), "quarter");
 		int balanceNoDecimal = userBalance.multiply(BigDecimal.valueOf(100)).intValue();
 		int quarters = balanceNoDecimal / 25;
 		int dimes = (balanceNoDecimal - (quarters * 25)) / 10;
 		int nickels = (balanceNoDecimal - (quarters * 25 + dimes * 10)) / 5;
-		
-		String quarterAmount = "",
-			   dimeAmount = "",
-			   nickelAmount = "";
+
+		String quarterAmount = "", dimeAmount = "", nickelAmount = "";
 		if (quarters == 1) {
 			quarterAmount = quarters + " quarter";
 		} else if (quarters > 1) {
 			quarterAmount = quarters + " quarters";
 		}
-		
+
 		if (dimes == 1) {
-			dimeAmount = quarters > 0 ? " and "+dimes+" dime" : dimes+" dime";
+			dimeAmount = quarters > 0 ? " and " + dimes + " dime" : dimes + " dime";
 		} else if (dimes > 1) {
-			dimeAmount = quarters > 0 ? " and "+dimes+" dimes" : dimes+" dimes";
+			dimeAmount = quarters > 0 ? " and " + dimes + " dimes" : dimes + " dimes";
 		}
-		
+
 		if (nickels == 1) {
-			nickelAmount = (quarters > 0 || dimes > 0) ? " and "+nickels+" nickel" :
-														 nickels+"nickel";
+			nickelAmount = (quarters > 0 || dimes > 0) ? " and " + nickels + " nickel" : nickels + "nickel";
 		} else if (nickels > 1) {
-			nickelAmount = (quarters > 0 || dimes > 0) ? " and "+nickels + " nickels":
-														 nickels+"nickels";
+			nickelAmount = (quarters > 0 || dimes > 0) ? " and " + nickels + " nickels" : nickels + "nickels";
 		}
-		
+
 		if ((quarterAmount + dimeAmount + nickelAmount).equals("")) {
 			return "You have spent all your money or have not added money yet. Thanks for shopping!";
-		} 
-		
+		}
+
 		userBalance = BigDecimal.valueOf(0);
-		return "Here is your change: " + quarterAmount + dimeAmount + nickelAmount + 
-				". Have a great day!";
+		return "Here is your change: " + quarterAmount + dimeAmount + nickelAmount + ". Have a great day!";
 	}
-	
+
 	private void populateItems() throws IOException {
-		File file = new File("vendingmachine.csv");
+		File file = new File(INVENTORY_FILE_NAME);
 		try (Scanner reader = new Scanner(file.getAbsoluteFile())) {
 
 			while (reader.hasNextLine()) {
 				String line = reader.nextLine();
 				String[] itemsStrings = line.split("\\|");
-				if (itemsStrings[3].equals("Chip")) {
+				if (itemsStrings[3].equals(CHIP_TYPE)) {
 					Chips chip = new Chips(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					chips.add(chip);
 					items.add(chip);
 					itemSelector.put(chip.getPosition(), chip);
-				} else if (itemsStrings[3].equals("Candy")) {
+				} else if (itemsStrings[3].equals(CANDY_TYPE)) {
 					Candy candy = new Candy(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					candies.add(candy);
 					items.add(candy);
 					itemSelector.put(candy.getPosition(), candy);
-				} else if (itemsStrings[3].equals("Drink")) {
+				} else if (itemsStrings[3].equals(DRINK_TYPE)) {
 					Drink drink = new Drink(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					drinks.add(drink);
 					items.add(drink);
 					itemSelector.put(drink.getPosition(), drink);
-				} else if (itemsStrings[3].equals("Gum")) {
+				} else if (itemsStrings[3].equals(GUM_TYPE)) {
 					Gum gum = new Gum(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
 					gums.add(gum);
 					items.add(gum);
@@ -201,6 +216,41 @@ public class VendingMachine {
 			System.out.println("Problem encountered. The file vendingmachine.csv is probably missing. Exiting.");
 			System.exit(1);
 		}
+	}
+
+	public boolean log(int transaction, BigDecimal amount) {
+		String transStr = "", logStr = "";
+		if (transaction == FEED_MONEY)
+			transStr = FEED_MONEY_STR;
+		if (transaction == GIVE_CHANGE)
+			transStr = GIVE_CHANGE_STR;
+		logStr = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a")) + transStr + "$"
+				+ amount.toString() + " $" + userBalance.toString();
+		salesLog.add(logStr);
+		logToFile(logStr);
+		return !transStr.isEmpty();
+	}
+
+	public boolean log(String position) {
+		String logStr = "";
+		Item itemInQuestion = itemSelector.get(position);
+		if (itemInQuestion != null) {
+			logStr = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a")) + " "
+					+ itemInQuestion.getName() + " " + itemInQuestion.getPosition() + " $"
+					+ userBalance.add(itemInQuestion.getPrice()).toString() + " $" + userBalance.toString();
+			salesLog.add(logStr);
+			logToFile(logStr);
+		}
+		return itemInQuestion != null;
+	}
+
+	public boolean logToFile(String logStr) {
+		try (PrintWriter logWriter = new PrintWriter(new FileOutputStream(logFile.getAbsoluteFile(), true))) {
+			logWriter.append(logStr + "\n");
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 }
