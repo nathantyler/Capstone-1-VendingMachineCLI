@@ -36,6 +36,7 @@ public class VendingMachineCLI {
 	private static final String FEED_MONEY_EXIT = "I am done.";
 	private static final String[] FEED_MONEY_EXIT_MENU_OPTIONS = { FEED_MONEY_CONTINUE, 
 																   FEED_MONEY_EXIT };
+	
 	private Menu menu;
 	private VendingMachine vendingMachine;
 
@@ -49,7 +50,9 @@ public class VendingMachineCLI {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				displayVendingMachineItems(vendingMachine);
+				System.out.println();
+				System.out.println("***All Items***");
+				displayVendingMachineItems(vendingMachine, false);
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				purchaseMenuRun(menu, vendingMachine);
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
@@ -65,31 +68,40 @@ public class VendingMachineCLI {
 			if (choice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
 				feedMoney(menu, vendingMachine);
 			} else if (choice.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
-				// select product
+				selectProduct(menu, vendingMachine);	
 			} else if (choice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)) {
 				// finish transaction
 			}
 		}
 	}
 	
-	public static void displayVendingMachineItems(VendingMachine vendingMachine) {
-		System.out.println();
-		System.out.println("*Available Items*");
+	public static void displayVendingMachineItems(VendingMachine vendingMachine, boolean considerStock) {
 		System.out.println("Slot Location       Product Name        "
 				+ "Price               Type                Stock");
 		System.out.println(String.join("", Collections.nCopies(88, "=")));
 		for (Item item : vendingMachine.getItems()) {
+				int itemStock = item.getStock();
 				String itemPosition = item.getPosition();
 				String itemName = item.getName();
 				String itemPrice = "$" + item.getPrice();
 				String itemType = item.getType();
-				String itemStock = item.getStock() > 0 ? String.valueOf(item.getStock()) : "SOLD OUT";
+				String itemStockStr = itemStock > 0 ? String.valueOf(itemStock) : "SOLD OUT";
 				
-				System.out.println(itemPosition + generateSpace(itemPosition) +
-						itemName + generateSpace(itemName) + 
-						itemPrice + generateSpace(itemPrice) +
-						itemType + generateSpace(itemType) + 
-						itemStock);
+				if (!considerStock) {
+					System.out.println(itemPosition + generateSpace(itemPosition) +
+							itemName + generateSpace(itemName) + 
+							itemPrice + generateSpace(itemPrice) +
+							itemType + generateSpace(itemType) + 
+							itemStockStr);
+				} else {
+					if (itemStock > 0) {
+						System.out.println(itemPosition + generateSpace(itemPosition) +
+								itemName + generateSpace(itemName) + 
+								itemPrice + generateSpace(itemPrice) +
+								itemType + generateSpace(itemType) + 
+								itemStockStr);
+					}
+				}
 		}
 	}
 	
@@ -128,6 +140,15 @@ public class VendingMachineCLI {
 		if (feedMore.equals(FEED_MONEY_CONTINUE)) {
 			feedMoney(menu, vendingMachine);
 		}
+	}
+	
+	public static void selectProduct(Menu menu, VendingMachine vendingMachine) {
+		System.out.println();
+		System.out.println("***Available Items***");
+		displayVendingMachineItems(vendingMachine, true);
+		System.out.println("Please Enter Item Code:");
+		String choice = menu.collectUserInput();
+		System.out.println("This is your choice: " + choice);
 	}
 
 	public static void main(String[] args) {

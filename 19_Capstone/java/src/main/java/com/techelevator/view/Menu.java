@@ -23,6 +23,11 @@ public class Menu {
 		}
 		return choice;
 	}
+	
+	public String collectUserInput() {
+		String userInput = in.nextLine();
+		return userInput;
+	}
 
 	private Object getChoiceFromUserInput(Object[] options) {
 		Object choice = null;
