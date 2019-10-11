@@ -118,6 +118,7 @@ public class VendingMachineCLI {
 			System.out.println();
 			System.out.println("$" + choice + " added to your balance successfully!");
 		} 
+		
 		System.out.println();
 		System.out.println("Current Money Provided: $" + vendingMachine.getUserBalance());
 		
