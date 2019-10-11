@@ -14,7 +14,7 @@ public class VendingMachine {
 	private List<Candy> candies;
 	private List<Drink> drinks;
 	private List<Gum> gums;
-	private BigDecimal userBalance;
+	private BigDecimal userBalance = BigDecimal.valueOf(0);
 
 	public VendingMachine() {
 		items = new ArrayList<Item>();
