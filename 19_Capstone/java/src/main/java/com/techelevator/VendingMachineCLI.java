@@ -70,7 +70,8 @@ public class VendingMachineCLI {
 			} else if (choice.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
 				selectProduct(menu, vendingMachine);	
 			} else if (choice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)) {
-				// finish transaction
+				finishTransaction(menu, vendingMachine);
+				return;
 			}
 		}
 	}
@@ -175,6 +176,11 @@ public class VendingMachineCLI {
 				System.out.println("Insufficient balance, please add more money.");
 			}
 		}
+	}
+	
+	public static void finishTransaction(Menu menu, VendingMachine vendingMachine) {
+		String finishMessage = vendingMachine.getChangeFromMachine();
+		System.out.println(finishMessage);
 	}
 
 	public static void main(String[] args) {
