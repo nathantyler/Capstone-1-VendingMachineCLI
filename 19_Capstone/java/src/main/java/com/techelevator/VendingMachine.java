@@ -65,6 +65,10 @@ public class VendingMachine {
 	public void addMoneyToMachine(BigDecimal money) {
 		userBalance = userBalance.add(money);
 	}
+	
+	public void dockMoneyOnMachine(BigDecimal itemPrice) {
+		userBalance = userBalance.subtract(itemPrice);
+	}
 
 	/*
 	 * Hey, Guan: Here are a few utility methods that may make things easier for
@@ -75,6 +79,17 @@ public class VendingMachine {
 
 	public boolean itemAtPositionExists(String position) {
 		return itemSelector.get(position) != null;
+	}
+	
+	/* returns -1 if there is no item at that position */
+	public int getItemStock(String position) {
+		Item itemAtPosition = itemSelector.get(position);
+		
+		if (itemAtPosition != null) {
+			return itemAtPosition.getStock();
+		}
+		
+		return -1;
 	}
 
 	/* returns null if there is no item at that position. */

@@ -51,7 +51,7 @@ public class VendingMachineCLI {
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				System.out.println();
-				System.out.println("***All Items***");
+				System.out.println("***All Products***");
 				displayVendingMachineItems(vendingMachine, false);
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				purchaseMenuRun(menu, vendingMachine);
@@ -144,11 +144,37 @@ public class VendingMachineCLI {
 	
 	public static void selectProduct(Menu menu, VendingMachine vendingMachine) {
 		System.out.println();
-		System.out.println("***Available Items***");
+		System.out.println("***Available Products***");
 		displayVendingMachineItems(vendingMachine, true);
-		System.out.println("Please Enter Item Code:");
+
+		System.out.println();
+		System.out.println("Please enter product code:");
 		String choice = menu.collectUserInput();
-		System.out.println("This is your choice: " + choice);
+
+		if (!vendingMachine.itemAtPositionExists(choice)) {
+			System.out.println();
+			System.out.println("Product does not exist.");
+		} else if (vendingMachine.getItemStock(choice) == 0) {
+			System.out.println();
+			System.out.println("Product is sold out.");
+		} else {
+			if (vendingMachine.getUserBalance().compareTo(vendingMachine.getItemPrice(choice)) >= 0) {
+				vendingMachine.decrementItemAtPosition(choice);
+				BigDecimal itemPrice = vendingMachine.getItemPrice(choice);
+				vendingMachine.dockMoneyOnMachine(itemPrice);
+				
+				String itemName = vendingMachine.getItemName(choice);
+				BigDecimal userBalance = vendingMachine.getUserBalance();
+				String itemMessage = vendingMachine.getItemMessage(choice);
+				System.out.println();
+				System.out.println("You just purchased " + itemName + " for $" + itemPrice + ".");
+				System.out.println("Your current balance is $" + userBalance + ".");
+				System.out.println(itemMessage);
+			} else {
+				System.out.println();
+				System.out.println("Insufficient balance, please add more money.");
+			}
+		}
 	}
 
 	public static void main(String[] args) {
