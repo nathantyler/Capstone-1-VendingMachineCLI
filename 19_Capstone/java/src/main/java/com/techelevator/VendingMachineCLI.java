@@ -85,6 +85,10 @@ public class VendingMachineCLI {
 		
 		return space;
 	}
+	
+	public static void feedMoney() {
+		
+	}
 
 	public static void main(String[] args) {
 		Menu menu = new Menu(System.in, System.out);
