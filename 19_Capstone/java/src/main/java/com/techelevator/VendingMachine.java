@@ -126,10 +126,6 @@ public class VendingMachine {
 
 	/*nickels, dimes, and quarters*/
 	public String getChangeFromMachine() {
-		Map<BigDecimal, String> currencyMap = new HashMap<>(); 
-		currencyMap.put(BigDecimal.valueOf(0.05), "nickel");
-		currencyMap.put(BigDecimal.valueOf(0.1), "dime");
-		currencyMap.put(BigDecimal.valueOf(0.25), "quarter");
 		int balanceNoDecimal = userBalance.multiply(BigDecimal.valueOf(100)).intValue();
 		int quarters = balanceNoDecimal / 25;
 		int dimes = (balanceNoDecimal - (quarters * 25)) / 10;
@@ -138,6 +134,7 @@ public class VendingMachine {
 		String quarterAmount = "",
 			   dimeAmount = "",
 			   nickelAmount = "";
+		
 		if (quarters == 1) {
 			quarterAmount = quarters + " quarter";
 		} else if (quarters > 1) {
