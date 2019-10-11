@@ -66,7 +66,7 @@ public class VendingMachine {
 		}
 
 	}
-
+	
 	private void populateItems() throws IOException {
 		File file = new File("vendingmachine.csv");
 		try (Scanner reader = new Scanner(file.getAbsoluteFile())) {

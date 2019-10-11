@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.util.Collections;
+
 import com.techelevator.view.Menu;
 
 public class VendingMachineCLI {
@@ -15,6 +17,7 @@ public class VendingMachineCLI {
 	private static final String[] PURCHASE_MENU_OPTIONS = { PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION };
 	
 	private Menu menu;
+	private VendingMachine vendingMachine = new VendingMachine();
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -25,7 +28,7 @@ public class VendingMachineCLI {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				// display vending machine items
+				displayVendingMachineItems(vendingMachine);
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				purchaseMenuRun(menu);
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
@@ -48,6 +51,39 @@ public class VendingMachineCLI {
 				// finish transaction
 			}
 		}
+	}
+	
+	public static void displayVendingMachineItems(VendingMachine vendingMachine) {
+		System.out.println();
+		System.out.println("*Available Items*");
+		System.out.println("Slot Location          Product Name           "
+				+ "Price                  Type");
+		System.out.println(String.join("", Collections.nCopies(80, "=")));
+		for (Item item : vendingMachine.getItems()) {
+			int itemStock = item.getStock();
+			if (itemStock > 0) {
+				String itemPosition = item.getPosition();
+				String itemName = item.getName();
+				String itemPrice = "$" + item.getPrice();
+				String itemType = item.getType();
+				
+				System.out.println(itemPosition + generateSpace(itemPosition) +
+						itemName + generateSpace(itemName) + 
+						itemPrice + generateSpace(itemPrice) +
+						itemType);
+			}
+		}
+	}
+	
+	public static String generateSpace(String str) {
+		int spaceLength = 23 - str.length();
+		String space = "";
+		
+		for (int i = 1; i <= spaceLength; i++) {
+			space += " ";
+		}
+		
+		return space;
 	}
 
 	public static void main(String[] args) {
