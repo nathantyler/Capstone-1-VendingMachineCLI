@@ -42,22 +42,6 @@ public class VendingMachine {
 		return userBalance;
 	}
 
-	public List<Chips> getChips() {
-		return chips;
-	}
-
-	public List<Candy> getCandies() {
-		return candies;
-	}
-
-	public List<Drink> getDrinks() {
-		return drinks;
-	}
-
-	public List<Gum> getGums() {
-		return gums;
-	}
-
 	public Map<String, Item> getItemSelector() {
 		return itemSelector;
 	}
@@ -69,13 +53,6 @@ public class VendingMachine {
 	public void dockMoneyOnMachine(BigDecimal itemPrice) {
 		userBalance = userBalance.subtract(itemPrice);
 	}
-
-	/*
-	 * Hey, Guan: Here are a few utility methods that may make things easier for
-	 * you. Use them if it helps. We can remove what we don't need, but I think some
-	 * may be very useful and make the code short/cleaner/nicer or at least more
-	 * readable.
-	 */
 
 	public boolean itemAtPositionExists(String position) {
 		return itemSelector.get(position) != null;
@@ -109,8 +86,7 @@ public class VendingMachine {
 
 	/*
 	 * This will return the items price. If the item at that position doesn't exist,
-	 * it returns -1. Actually I may change this to be in line with the rest of the
-	 * item getters and make it return null if unsuccessful. What do you think?
+	 * it returns -1.
 	 */
 	public BigDecimal getItemPrice(String position) {
 		return itemSelector.get(position) != null ? itemSelector.get(position).getPrice() : BigDecimal.valueOf(-1);
