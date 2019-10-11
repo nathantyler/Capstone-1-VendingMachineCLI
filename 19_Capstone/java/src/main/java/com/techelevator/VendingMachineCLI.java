@@ -31,6 +31,7 @@ public class VendingMachineCLI {
 																  FEED_MONEY_MENU_5_DOLLAR,
 																  FEED_MONEY_MENU_10_DOLLAR, 
 																  FEED_MONEY_MENU_20_DOLLAR };
+	
 	private static final String FEED_MONEY_CONTINUE = "Add more money.";
 	private static final String FEED_MONEY_EXIT = "I am done.";
 	private static final String[] FEED_MONEY_EXIT_MENU_OPTIONS = { FEED_MONEY_CONTINUE, 

@@ -1,9 +1,10 @@
 package com.techelevator.view;
 
+import static org.junit.Assert.*;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,12 +23,11 @@ public class MenuTest {
 	public void displays_a_list_of_menu_options_and_prompts_user_to_make_a_choice() {
 		Object[] options = new Object[] { new Integer(3), "Blind", "Mice" };
 		Menu menu = getMenuForTesting();
-
 		menu.getChoiceFromOptions(options);
-
-		String expected = "\n" + "1) " + options[0].toString() + "\n" + "2) " + options[1].toString() + "\n" + "3) "
-				+ options[2].toString() + "\n\n" + "Please choose an option >>> ";
-		Assert.assertEquals(expected, output.toString());
+		
+		String expected = "\r\n" + "1) " + options[0].toString() + "\r\n" + "2) " + options[1].toString() + "\r\n" + "3) "
+				+ options[2].toString() + "\r\n\n" + "Please choose an option >>> ";
+		assertEquals(expected, output.toString());
 	}
 
 	@Test
@@ -37,53 +37,46 @@ public class MenuTest {
 		Menu menu = getMenuForTestingWithUserInput("2\n");
 
 		Integer result = (Integer) menu.getChoiceFromOptions(options);
-
-		Assert.assertEquals(expected, result);
+		assertEquals(expected, result);
 	}
 
 	@Test
 	public void redisplays_menu_if_user_does_not_choose_valid_option() {
 		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
 		Menu menu = getMenuForTestingWithUserInput("4\n1\n");
-
 		menu.getChoiceFromOptions(options);
 
-		String menuDisplay = "\n" + "1) " + options[0].toString() + "\n" + "2) " + options[1].toString() + "\n" + "3) "
-				+ options[2].toString() + "\n\n" + "Please choose an option >>> ";
+		String menuDisplay = "\r\n" + "1) " + options[0].toString() + "\r\n" + "2) " + options[1].toString() + "\r\n" + "3) "
+				+ options[2].toString() + "\r\n\n" + "Please choose an option >>> ";
 
-		String expected = menuDisplay + "\n*** 4 is not a valid option ***\n\n" + menuDisplay;
-
-		Assert.assertEquals(expected, output.toString());
+		String expected = menuDisplay + "\n*** 4 is not a valid option ***\n\r\n" + menuDisplay;
+		assertEquals(expected, output.toString());
 	}
 
 	@Test
 	public void redisplays_menu_if_user_chooses_option_less_than_1() {
 		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
 		Menu menu = getMenuForTestingWithUserInput("0\n1\n");
-
 		menu.getChoiceFromOptions(options);
 
-		String menuDisplay = "\n" + "1) " + options[0].toString() + "\n" + "2) " + options[1].toString() + "\n" + "3) "
-				+ options[2].toString() + "\n\n" + "Please choose an option >>> ";
+		String menuDisplay = "\r\n" + "1) " + options[0].toString() + "\r\n" + "2) " + options[1].toString() + "\r\n" + "3) "
+				+ options[2].toString() + "\r\n\n" + "Please choose an option >>> ";
 
-		String expected = menuDisplay + "\n*** 0 is not a valid option ***\n\n" + menuDisplay;
-
-		Assert.assertEquals(expected, output.toString());
+		String expected = menuDisplay + "\n*** 0 is not a valid option ***\n\r\n" + menuDisplay;
+		assertEquals(expected, output.toString());
 	}
 
 	@Test
 	public void redisplays_menu_if_user_enters_garbage() {
 		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
 		Menu menu = getMenuForTestingWithUserInput("Mickey Mouse\n1\n");
-
 		menu.getChoiceFromOptions(options);
 
-		String menuDisplay = "\n" + "1) " + options[0].toString() + "\n" + "2) " + options[1].toString() + "\n" + "3) "
-				+ options[2].toString() + "\n\n" + "Please choose an option >>> ";
+		String menuDisplay = "\r\n" + "1) " + options[0].toString() + "\r\n" + "2) " + options[1].toString() + "\r\n" + "3) "
+				+ options[2].toString() + "\r\n\n" + "Please choose an option >>> ";
 
-		String expected = menuDisplay + "\n*** Mickey Mouse is not a valid option ***\n\n" + menuDisplay;
-
-		Assert.assertEquals(expected, output.toString());
+		String expected = menuDisplay + "\n*** Mickey Mouse is not a valid option ***\n\r\n" + menuDisplay;
+		assertEquals(expected, output.toString());
 	}
 
 	private Menu getMenuForTestingWithUserInput(String userInput) {

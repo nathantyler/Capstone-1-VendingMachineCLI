@@ -22,6 +22,6 @@ public class VendingMachineTest {
 	public void usersShouldBeAbleToAddMoneyToTheirBalanceInMachine() {
 		vendingMachineTest.addMoneyToMachine(BigDecimal.valueOf(5));
 		BigDecimal userBalance = vendingMachineTest.getUserBalance();
-		assertEquals(BigDecimal.valueOf(5), userBalance);
+		assertEquals(new BigDecimal("5.00"), userBalance);
 	}
 }

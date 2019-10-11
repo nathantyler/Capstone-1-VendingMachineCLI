@@ -15,8 +15,8 @@ public class VendingMachine {
     private List<Candy> candies;
     private List<Drink> drinks;
     private List<Gum> gums;
-    private Map<String, Item> itemSelector; // If you think of a better name for this map feel free to change it.
-    private BigDecimal userBalance; // Guan, I moved this initialization to the constructor.
+    private Map<String, Item> itemSelector; 
+    private BigDecimal userBalance; 
  
     public VendingMachine() {
         items = new ArrayList<Item>();
