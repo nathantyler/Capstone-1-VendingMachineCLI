@@ -11,19 +11,11 @@ import java.util.Scanner;
 
 public class VendingMachine {
 	private List<Item> items;
-	private List<Chips> chips;
-	private List<Candy> candies;
-	private List<Drink> drinks;
-	private List<Gum> gums;
 	private Map<String, Item> itemSelector; 
 	private BigDecimal userBalance; 
 
 	public VendingMachine() {
 		items = new ArrayList<Item>();
-		chips = new ArrayList<Chips>();
-		candies = new ArrayList<Candy>();
-		drinks = new ArrayList<Drink>();
-		gums = new ArrayList<Gum>();
 		itemSelector = new HashMap<String, Item>();
 		userBalance = new BigDecimal("0.00");
 		
@@ -126,13 +118,11 @@ public class VendingMachine {
 		if (nickels == 1) {
 			nickelAmount = (quarters > 0 || dimes > 0) ? " and "+nickels+" nickel" :
 														 nickels+"nickel";
-		} else if (nickels > 1) {
-			nickelAmount = (quarters > 0 || dimes > 0) ? " and "+nickels + " nickels":
-														 nickels+"nickels";
 		}
 		
 		if ((quarterAmount + dimeAmount + nickelAmount).equals("")) {
-			return "You have spent all your money or have not added money yet. Thanks for shopping!";
+			return "You have spent all your money or have not added money yet. "
+					+ "Thanks for shopping!";
 		} 
 		
 		userBalance = BigDecimal.valueOf(0);
@@ -149,22 +139,18 @@ public class VendingMachine {
 				String[] itemsStrings = line.split("\\|");
 				if (itemsStrings[3].equals("Chip")) {
 					Chips chip = new Chips(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-					chips.add(chip);
 					items.add(chip);
 					itemSelector.put(chip.getPosition(), chip);
 				} else if (itemsStrings[3].equals("Candy")) {
 					Candy candy = new Candy(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-					candies.add(candy);
 					items.add(candy);
 					itemSelector.put(candy.getPosition(), candy);
 				} else if (itemsStrings[3].equals("Drink")) {
 					Drink drink = new Drink(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-					drinks.add(drink);
 					items.add(drink);
 					itemSelector.put(drink.getPosition(), drink);
 				} else if (itemsStrings[3].equals("Gum")) {
 					Gum gum = new Gum(itemsStrings[0], itemsStrings[1], new BigDecimal(itemsStrings[2]));
-					gums.add(gum);
 					items.add(gum);
 					itemSelector.put(gum.getPosition(), gum);
 				}
