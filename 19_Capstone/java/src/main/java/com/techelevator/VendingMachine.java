@@ -59,19 +59,7 @@ public class VendingMachine {
 			System.out.println("Problem! vendingmachine.csv most likely not present.");
 		}
 
-		try (FileInputStream prevSalesMapFile = new FileInputStream(PREVIOUS_SALES_MAP)) {
-			ObjectInputStream preSalesMapIn = new ObjectInputStream(prevSalesMapFile);
-			try {
-				salesTracker = (TotalSalesTracker) preSalesMapIn.readObject();
-				preSalesMapIn.close();
-			} catch (ClassNotFoundException e) {
-				// Eclipse did not like when this wasn't caught.
-				salesTracker = new TotalSalesTracker();
-			}
-
-		} catch (IOException e) {
-			salesTracker = new TotalSalesTracker();
-		}
+		readSalesTracker();
 		if (salesTracker.getTotalSales() == null) {
 			salesTracker.setTotalSales(new HashMap<String, Integer>());
 		}
@@ -246,6 +234,28 @@ public class VendingMachine {
 			writeSalesTracker();
 		}
 		return itemInQuestion != null;
+	}
+	
+	public boolean readSalesTracker() {
+		boolean readSuccessful = true;
+		
+		try (FileInputStream prevSalesTrackerFile = new FileInputStream(PREVIOUS_SALES_MAP)) {
+			ObjectInputStream preSalesTrackerIn = new ObjectInputStream(prevSalesTrackerFile);
+			try {
+				salesTracker = (TotalSalesTracker) preSalesTrackerIn.readObject();
+				preSalesTrackerIn.close();
+			} catch (ClassNotFoundException e) {
+				// Eclipse did not like when this wasn't caught.
+				salesTracker = new TotalSalesTracker();
+				readSuccessful = false;
+			}
+
+		} catch (IOException e) {
+			salesTracker = new TotalSalesTracker();
+			readSuccessful = false;
+		}
+		
+		return readSuccessful;
 	}
 
 	public boolean logToFile(String logStr) {
