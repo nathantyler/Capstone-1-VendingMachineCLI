@@ -28,7 +28,7 @@ public class VendingMachine {
 	private BigDecimal userBalance;
 	private List<String> salesLog;
 	private File logFile;
-	private TotalSalesTracker salesTracker;	
+	private TotalSalesTracker salesTracker;
 
 	public VendingMachine() {
 		items = new ArrayList<Item>();
@@ -40,7 +40,7 @@ public class VendingMachine {
 			try {
 				logFile.createNewFile();
 			} catch (Exception e) {
-
+				/* Wow, something must have really gone wrong here, we'rd dooooomed. */
 			}
 
 		}
@@ -125,7 +125,6 @@ public class VendingMachine {
 	public BigDecimal getItemPrice(String position) {
 		return itemSelector.get(position) != null ? itemSelector.get(position).getPrice() : BigDecimal.valueOf(-1);
 	}
-
 
 	public boolean decrementItemAtPosition(String position) {
 		boolean decrementSuccesful = false;
@@ -229,9 +228,10 @@ public class VendingMachine {
 		}
 		return itemInQuestion != null;
 	}
-	
+
+	/* Quick and dirty, like it was written at 11pm. Oh wait, it was. */
 	public boolean readSalesTracker() {
-		boolean readSuccessful = true;		
+		boolean readSuccessful = true;
 		try (FileInputStream prevSalesTrackerFile = new FileInputStream(PREVIOUS_SALES_MAP)) {
 			ObjectInputStream preSalesTrackerIn = new ObjectInputStream(prevSalesTrackerFile);
 			try {
@@ -247,7 +247,7 @@ public class VendingMachine {
 			salesTracker = new TotalSalesTracker();
 			readSuccessful = false;
 		}
-		
+
 		return readSuccessful;
 	}
 
@@ -260,6 +260,7 @@ public class VendingMachine {
 		return true;
 	}
 
+	/* Quick and dirty, like it was written at 11pm. Oh wait, it was. */
 	public boolean writeSalesTracker() {
 		boolean writeSuccessful = true;
 		try (FileOutputStream outputFile = new FileOutputStream(PREVIOUS_SALES_MAP)) {
@@ -272,6 +273,7 @@ public class VendingMachine {
 		return writeSuccessful;
 	}
 
+	/* Quick and dirty, like it was written at 11pm. Oh wait, it was. */
 	public boolean hiddenSalesLog() {
 		boolean writeSuccessful = true;
 		String logFile = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy-hh.mm.ss.SS-a"));
