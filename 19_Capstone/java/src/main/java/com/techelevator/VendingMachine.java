@@ -25,15 +25,10 @@ public class VendingMachine {
 	private static final String LOG_FILE_NAME = "log.txt", PREVIOUS_SALES_MAP = "previous.sales";
 	private List<Item> items;
 	private Map<String, Item> itemSelector;
-	// private Map<String, Integer> totalSales;
-	// private Map<String, Integer> previousTotalSales;
 	private BigDecimal userBalance;
 	private List<String> salesLog;
 	private File logFile;
-	private BigDecimal totalRevenue;
-	private TotalSalesTracker salesTracker;
-	// private int totalTransactions;
-	// private String hiddenLogDisplay;
+	private TotalSalesTracker salesTracker;	
 
 	public VendingMachine() {
 		items = new ArrayList<Item>();
@@ -41,9 +36,6 @@ public class VendingMachine {
 		userBalance = new BigDecimal("0.00");
 		salesLog = new ArrayList<String>();
 		logFile = new File(LOG_FILE_NAME);
-		totalRevenue = new BigDecimal("0.00");
-		// totalTransactions = 0;
-		// totalSales = new HashMap<String, Integer>();
 		if (!logFile.exists()) {
 			try {
 				logFile.createNewFile();
@@ -230,7 +222,6 @@ public class VendingMachine {
 					+ userBalance.add(itemInQuestion.getPrice()).toString() + " $" + userBalance.toString();
 			salesLog.add(logStr);
 			logToFile(logStr);
-			// totalTransactions++;
 			salesTracker.addToTotalRevenue(itemInQuestion.getPrice());
 			salesTracker.getTotalSales().put(itemInQuestion.getName(),
 					salesTracker.getTotalSales().get(itemInQuestion.getName()) + 1);
@@ -240,8 +231,7 @@ public class VendingMachine {
 	}
 	
 	public boolean readSalesTracker() {
-		boolean readSuccessful = true;
-		
+		boolean readSuccessful = true;		
 		try (FileInputStream prevSalesTrackerFile = new FileInputStream(PREVIOUS_SALES_MAP)) {
 			ObjectInputStream preSalesTrackerIn = new ObjectInputStream(prevSalesTrackerFile);
 			try {
