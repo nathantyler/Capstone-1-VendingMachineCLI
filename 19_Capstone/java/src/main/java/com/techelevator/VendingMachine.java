@@ -63,6 +63,9 @@ public class VendingMachine {
 		if (salesTracker.getTotalSales() == null) {
 			salesTracker.setTotalSales(new HashMap<String, Integer>());
 		}
+		if (salesTracker.getTotalRevenue() == null) {
+			salesTracker.setTotalRevenue(new BigDecimal("0.00"));
+		}
 		for (Item item : items) {
 			if (salesTracker.getTotalSales().get(item.getName()) == null)
 				salesTracker.getTotalSales().put(item.getName(), 0);
@@ -292,6 +295,7 @@ public class VendingMachine {
 		try (PrintWriter logWriter = new PrintWriter(hiddenLog.getAbsoluteFile())) {
 			for (Item item : items)
 				logWriter.write(item.getName() + "|" + salesTracker.getTotalSales().get(item.getName()) + "\n");
+			logWriter.write("Total Revenue: $" + salesTracker.getTotalRevenue().toString());
 			logWriter.flush();
 		} catch (FileNotFoundException e) {
 			writeSuccessful = false;
