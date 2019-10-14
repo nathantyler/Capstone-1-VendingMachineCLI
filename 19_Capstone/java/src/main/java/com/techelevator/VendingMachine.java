@@ -1,8 +1,12 @@
 package com.techelevator;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -18,12 +22,18 @@ public class VendingMachine {
 	private static final String FEED_MONEY_STR = " FEED MONEY ", GIVE_CHANGE_STR = " GIVE CHANGE ";
 	private static final String INVENTORY_FILE_NAME = "vendingmachine.csv";
 	private static final String CHIP_TYPE = "Chip", CANDY_TYPE = "Candy", DRINK_TYPE = "Drink", GUM_TYPE = "Gum";
-	private static final String LOG_FILE_NAME = "log.txt";
+	private static final String LOG_FILE_NAME = "log.txt", PREVIOUS_SALES_MAP = "previous.sales";
 	private List<Item> items;
 	private Map<String, Item> itemSelector;
+	// private Map<String, Integer> totalSales;
+	// private Map<String, Integer> previousTotalSales;
 	private BigDecimal userBalance;
 	private List<String> salesLog;
 	private File logFile;
+	private BigDecimal totalRevenue;
+	private TotalSalesTracker salesTracker;
+	// private int totalTransactions;
+	// private String hiddenLogDisplay;
 
 	public VendingMachine() {
 		items = new ArrayList<Item>();
@@ -31,6 +41,9 @@ public class VendingMachine {
 		userBalance = new BigDecimal("0.00");
 		salesLog = new ArrayList<String>();
 		logFile = new File(LOG_FILE_NAME);
+		totalRevenue = new BigDecimal("0.00");
+		// totalTransactions = 0;
+		// totalSales = new HashMap<String, Integer>();
 		if (!logFile.exists()) {
 			try {
 				logFile.createNewFile();
@@ -39,10 +52,32 @@ public class VendingMachine {
 			}
 
 		}
+
 		try {
 			populateItems();
 		} catch (Exception e) {
 			System.out.println("Problem! vendingmachine.csv most likely not present.");
+		}
+
+		try (FileInputStream prevSalesMapFile = new FileInputStream(PREVIOUS_SALES_MAP)) {
+			ObjectInputStream preSalesMapIn = new ObjectInputStream(prevSalesMapFile);
+			try {
+				salesTracker = (TotalSalesTracker) preSalesMapIn.readObject();
+				preSalesMapIn.close();
+			} catch (ClassNotFoundException e) {
+				// Eclipse did not like when this wasn't caught.
+				salesTracker = new TotalSalesTracker();
+			}
+
+		} catch (IOException e) {
+			salesTracker = new TotalSalesTracker();
+		}
+		if (salesTracker.getTotalSales() == null) {
+			salesTracker.setTotalSales(new HashMap<String, Integer>());
+		}
+		for (Item item : items) {
+			if (salesTracker.getTotalSales().get(item.getName()) == null)
+				salesTracker.getTotalSales().put(item.getName(), 0);
 		}
 	}
 
@@ -108,6 +143,7 @@ public class VendingMachine {
 		return itemSelector.get(position) != null ? itemSelector.get(position).getPrice() : BigDecimal.valueOf(-1);
 	}
 
+
 	public boolean decrementItemAtPosition(String position) {
 		boolean decrementSuccesful = false;
 		Item itemAtPosition = itemSelector.get(position);
@@ -122,11 +158,9 @@ public class VendingMachine {
 		int quarters = balanceNoDecimal / 25;
 		int dimes = (balanceNoDecimal - (quarters * 25)) / 10;
 		int nickels = (balanceNoDecimal - (quarters * 25 + dimes * 10)) / 5;
-		
-		String quarterAmount = "",
-			   dimeAmount = "",
-			   nickelAmount = "";
-		
+
+		String quarterAmount = "", dimeAmount = "", nickelAmount = "";
+
 		if (quarters == 1) {
 			quarterAmount = quarters + " quarter";
 		} else if (quarters > 1) {
@@ -141,13 +175,12 @@ public class VendingMachine {
 
 		if (nickels == 1) {
 			nickelAmount = (quarters > 0 || dimes > 0) ? " and " + nickels + " nickel" : nickels + " nickel";
-		} 
+		}
 
 		if ((quarterAmount + dimeAmount + nickelAmount).equals("")) {
-			return "You have spent all your money or have not added money yet. "
-					+ "Thanks for shopping!";
-		} 
-		
+			return "You have spent all your money or have not added money yet. " + "Thanks for shopping!";
+		}
+
 		userBalance = BigDecimal.valueOf(0);
 		return "Here is your change: " + quarterAmount + dimeAmount + nickelAmount + ". Have a great day!";
 	}
@@ -206,6 +239,11 @@ public class VendingMachine {
 					+ userBalance.add(itemInQuestion.getPrice()).toString() + " $" + userBalance.toString();
 			salesLog.add(logStr);
 			logToFile(logStr);
+			// totalTransactions++;
+			salesTracker.addToTotalRevenue(itemInQuestion.getPrice());
+			salesTracker.getTotalSales().put(itemInQuestion.getName(),
+					salesTracker.getTotalSales().get(itemInQuestion.getName()) + 1);
+			writeSalesTracker();
 		}
 		return itemInQuestion != null;
 	}
@@ -217,6 +255,39 @@ public class VendingMachine {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean writeSalesTracker() {
+		boolean writeSuccessful = true;
+		try (FileOutputStream outputFile = new FileOutputStream(PREVIOUS_SALES_MAP)) {
+			try (ObjectOutputStream outputStream = new ObjectOutputStream(outputFile)) {
+				outputStream.writeObject(salesTracker);
+			}
+		} catch (IOException e) {
+			writeSuccessful = false;
+		}
+		return writeSuccessful;
+	}
+
+	public boolean hiddenSalesLog() {
+		boolean writeSuccessful = true;
+		String logFile = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy-hh.mm.ss.SS-a"));
+		logFile = "HiddenSalesLog" + logFile + ".txt";
+		File hiddenLog = new File(logFile);
+		try {
+			hiddenLog.createNewFile();
+		} catch (IOException e) {
+			writeSuccessful = false;
+		}
+		try (PrintWriter logWriter = new PrintWriter(hiddenLog.getAbsoluteFile())) {
+			for (Item item : items)
+				logWriter.write(item.getName() + "|" + salesTracker.getTotalSales().get(item.getName()) + "\n");
+			logWriter.flush();
+		} catch (FileNotFoundException e) {
+			writeSuccessful = false;
+		}
+
+		return writeSuccessful;
 	}
 
 }

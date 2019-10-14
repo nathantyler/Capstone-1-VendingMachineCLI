@@ -10,6 +10,8 @@ public class TestSpace {
 
 	public static void main(String[] args) {
 		VendingMachine vend = new VendingMachine();
+		System.out.println(vend.writeSalesTracker());
+		System.out.println(vend.hiddenSalesLog());
 //		System.out.println("why");
 //		for (Item item : vend.getItems()) {
 //			// System.out.println("hmmm");
