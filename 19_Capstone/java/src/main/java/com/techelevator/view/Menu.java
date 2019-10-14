@@ -50,7 +50,9 @@ public class Menu {
 		out.println();
 		for (int i = 0; i < options.length; i++) {
 			int optionNum = i + 1;
-			out.println(optionNum + ") " + options[i]);
+			if (!String.valueOf(options[i]).equals("")) {
+				out.println(optionNum + ") " + options[i]);
+			}
 		}
 		out.print("\nPlease choose an option >>> ");
 		out.flush();

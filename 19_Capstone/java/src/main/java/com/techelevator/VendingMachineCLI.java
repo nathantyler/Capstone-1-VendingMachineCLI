@@ -79,7 +79,7 @@ public class VendingMachineCLI {
 			} else if (choice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)) {
 				finishTransaction(menu, vendingMachine);
 				return;
-			}
+			} 
 		}
 	}
 	
