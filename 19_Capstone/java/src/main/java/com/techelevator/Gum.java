@@ -13,12 +13,6 @@ public class Gum extends Item {
 		stock = 5;
 	}
 	
-	public Gum() {
-		type = "Gum";
-		message = "Chew Chew, Yum!";
-		stock = 5;
-	}
-	
 	public String getType() {
 		return type;
 	}

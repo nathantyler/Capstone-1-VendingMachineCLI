@@ -101,8 +101,7 @@ public class VendingMachine {
 	}
 
 	/*
-	 * This will return the items price. If the item at that position doesn't exist,
-	 * it returns -1.
+	 * return -1 if there is no item at that position
 	 */
 	public BigDecimal getItemPrice(String position) {
 		return itemSelector.get(position) != null ? itemSelector.get(position).getPrice() : BigDecimal.valueOf(-1);
@@ -116,7 +115,6 @@ public class VendingMachine {
 		return decrementSuccesful;
 	}
 
-	/* nickels, dimes, and quarters */
 	public String getChangeFromMachine() {
 		int balanceNoDecimal = userBalance.multiply(BigDecimal.valueOf(100)).intValue();
 		int quarters = balanceNoDecimal / 25;
