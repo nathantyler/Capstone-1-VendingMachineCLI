@@ -40,7 +40,7 @@ public class VendingMachine {
 			try {
 				logFile.createNewFile();
 			} catch (Exception e) {
-				/* Wow, something must have really gone wrong here, we'rd dooooomed. */
+				System.out.println("File creation failure.");
 			}
 
 		}
@@ -227,7 +227,6 @@ public class VendingMachine {
 		return itemInQuestion != null;
 	}
 
-	/* Quick and dirty, like it was written at 11pm. Oh wait, it was. */
 	public boolean readSalesTracker() {
 		boolean readSuccessful = true;
 		try (FileInputStream prevSalesTrackerFile = new FileInputStream(PREVIOUS_SALES_MAP)) {
@@ -258,7 +257,6 @@ public class VendingMachine {
 		return true;
 	}
 
-	/* Quick and dirty, like it was written at 11pm. Oh wait, it was. */
 	public boolean writeSalesTracker() {
 		boolean writeSuccessful = true;
 		try (FileOutputStream outputFile = new FileOutputStream(PREVIOUS_SALES_MAP)) {
@@ -271,7 +269,6 @@ public class VendingMachine {
 		return writeSuccessful;
 	}
 
-	/* Quick and dirty, like it was written at 11pm. Oh wait, it was. */
 	public boolean hiddenSalesLog() {
 		boolean writeSuccessful = true;
 		String logFile = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy-hh.mm.ss.SS-a"));

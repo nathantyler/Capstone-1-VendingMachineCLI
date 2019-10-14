@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Map;
 
-/* Quick and dirty, like it was written at 11pm. Oh wait, it was.*/
 public class TotalSalesTracker implements Serializable {
 
 	private Map<String, Integer> totalSales;
