@@ -15,7 +15,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-log.txt
+*.txt
+previous.sales
 
 # External tool builders
 .externalToolBuilders/
