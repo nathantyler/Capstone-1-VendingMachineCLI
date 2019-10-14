@@ -10,9 +10,11 @@ public class VendingMachineCLI {
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
+	private static final String MAIN_MENU_OPTION_HIDDEN = "";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, 
 														MAIN_MENU_OPTION_PURCHASE, 
-														MAIN_MENU_OPTION_EXIT };
+														MAIN_MENU_OPTION_EXIT,
+														MAIN_MENU_OPTION_HIDDEN };
 	
 	private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed Money";
 	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
@@ -58,7 +60,12 @@ public class VendingMachineCLI {
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				System.out.println("Thank you for shopping, see you next time!");
 				return;
-			} 
+			} else if (choice.equals(MAIN_MENU_OPTION_HIDDEN)) {
+				boolean created = vendingMachine.hiddenSalesLog();
+				if (created) {
+					System.out.println("Sales report created successfully!");
+				}
+			}
 		}
 	}
 	
@@ -72,7 +79,7 @@ public class VendingMachineCLI {
 			} else if (choice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)) {
 				finishTransaction(menu, vendingMachine);
 				return;
-			}
+			} 
 		}
 	}
 	
