@@ -15,8 +15,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-*.txt
-previous.sales
+log.txt
 
 # External tool builders
 .externalToolBuilders/
@@ -55,3 +54,7 @@ previous.sales
 .cache-main
 .scala_dependencies
 .worksheet
+
+# Project specific files
+HiddenSalesLog*.txt
+previous.sales
